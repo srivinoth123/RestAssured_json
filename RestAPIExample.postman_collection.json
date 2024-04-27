@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "ba9d57b0-9c7c-43c1-ae97-ca172f4ad1e5",
+		"name": "RestAPIExample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34275442"
+	},
+	"item": [
+		{
+			"name": "Get employees details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"verify status code 200 and Ok\",function(){\r",
+							"pm.response.to.have.status(200);\r",
+							"pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify status code 200\", ()=>{\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify status message OK\", ()=>{\r",
+							"pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify employee name mahathishree\",function(){\r",
+							"   var nameValidation = pm.response.json();\r",
+							"   pm.expect(nameValidation[0].firstname).to.eql(\"mahathishree\"); \r",
+							"});\r",
+							"\r",
+							"pm.test(\"check praba name is presented in json file\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(\"srivatsan\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Devika\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{employees_URL}}",
+					"host": [
+						"{{employees_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post request add new employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify response code 201\", function(){\r",
+							"    pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verify response message Created\",function(){\r",
+							"    pm.expect(pm.response.status).to.eql(\"Created\");\r",
+							"});\r",
+							"\r",
+							"var jsonBody = pm.response.json();\r",
+							"var id = jsonBody.id;\r",
+							"pm.collectionVariables.set(\"getID\", id);\r",
+							"console.log(id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"firstname\": \"Devika\",\r\n\"lastName\": \"Subramani\",\r\n\"email\": \"devika@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_URL}}",
+					"host": [
+						"{{employees_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put update the employee details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code 200\",function(){\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify status message OK\",function(){\r",
+							"    pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"404b\",\r\n\"firstname\": \"Meena\",\r\n\"lastName\": \"Karthik\",\r\n\"email\": \"karthi@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_URL}}/{{getID}}",
+					"host": [
+						"{{employees_URL}}"
+					],
+					"path": [
+						"{{getID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete the employee details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify status code 200\",function(){\r",
+							"    pm.expect(pm.response.code).to.eql(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify status message OK\",function(){\r",
+							"    pm.expect(pm.response.status).to.eql(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{employees_URL}}/{{getID}}",
+					"host": [
+						"{{employees_URL}}"
+					],
+					"path": [
+						"{{getID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Perameeters",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://www.google.com/?q=delhi&sca_esv=c2c122aff106e202&sxsrf=ACQVn0-G-pwDJDwHkPAtCgrpYYOSv1FA_Q%3A1713429013693&source=hp&ei=FdogZrfFI5qLvr0PkY2RiAc&iflsig=ANes7DEAAAAAZiDoJbGEC8fUt92Q_wxWoLffV4NYECik&ved=0ahUKEwj3o8-9rMuFAxWaha8BHZFGBHEQ4dUDCBU&uact=5&oq=kullu+manali&gs_lp=Egdnd3Mtd2l6IgxrdWxsdSBtYW5hbGkyCxAuGIAEGLEDGIMBMgUQABiABDIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixAzIOEC4YgAQYsQMYxwEYrwEyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESOhoUABY9GNwCHgAkAEAmAGJAqAB6BiqAQYwLjE5LjG4AQPIAQD4AQGYAhygAo4aqAIKwgIREC4YgAQYsQMY0QMYgwEYxwHCAgsQABiABBixAxiDAcICDhAAGIAEGLEDGIMBGIoFwgIIEC4YgAQYsQPCAg4QLhiABBjHARiOBRivAcICBRAuGIAEwgIOEC4YgAQYsQMYgwEYigXCAg4QLhiABBixAxjRAxjHAcICCxAuGIAEGMcBGK8BwgIHEC4YgAQYCsICBxAAGIAEGArCAg0QLhiABBixAxiDARgKwgIKEAAYgAQYsQMYCsICEBAuGIAEGLEDGMcBGAoYrwHCAhAQABgDGOUCGOoCGIwDGI8BwgIQEC4YAxjlAhjqAhiMAxiPAZgDB5IHBjguMTkuMaAH5PgB&sclient=gws-wiz",
+					"protocol": "https",
+					"host": [
+						"www",
+						"google",
+						"com"
+					],
+					"path": [
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "delhi"
+						},
+						{
+							"key": "sca_esv",
+							"value": "c2c122aff106e202"
+						},
+						{
+							"key": "sxsrf",
+							"value": "ACQVn0-G-pwDJDwHkPAtCgrpYYOSv1FA_Q%3A1713429013693"
+						},
+						{
+							"key": "source",
+							"value": "hp"
+						},
+						{
+							"key": "ei",
+							"value": "FdogZrfFI5qLvr0PkY2RiAc"
+						},
+						{
+							"key": "iflsig",
+							"value": "ANes7DEAAAAAZiDoJbGEC8fUt92Q_wxWoLffV4NYECik"
+						},
+						{
+							"key": "ved",
+							"value": "0ahUKEwj3o8-9rMuFAxWaha8BHZFGBHEQ4dUDCBU"
+						},
+						{
+							"key": "uact",
+							"value": "5"
+						},
+						{
+							"key": "oq",
+							"value": "kullu+manali"
+						},
+						{
+							"key": "gs_lp",
+							"value": "Egdnd3Mtd2l6IgxrdWxsdSBtYW5hbGkyCxAuGIAEGLEDGIMBMgUQABiABDIIEAAYgAQYsQMyBRAAGIAEMggQABiABBixAzIOEC4YgAQYsQMYxwEYrwEyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAESOhoUABY9GNwCHgAkAEAmAGJAqAB6BiqAQYwLjE5LjG4AQPIAQD4AQGYAhygAo4aqAIKwgIREC4YgAQYsQMY0QMYgwEYxwHCAgsQABiABBixAxiDAcICDhAAGIAEGLEDGIMBGIoFwgIIEC4YgAQYsQPCAg4QLhiABBjHARiOBRivAcICBRAuGIAEwgIOEC4YgAQYsQMYgwEYigXCAg4QLhiABBixAxjRAxjHAcICCxAuGIAEGMcBGK8BwgIHEC4YgAQYCsICBxAAGIAEGArCAg0QLhiABBixAxiDARgKwgIKEAAYgAQYsQMYCsICEBAuGIAEGLEDGMcBGAoYrwHCAhAQABgDGOUCGOoCGIwDGI8BwgIQEC4YAxjlAhjqAhiMAxiPAZgDB5IHBjguMTkuMaAH5PgB"
+						},
+						{
+							"key": "sclient",
+							"value": "gws-wiz"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MultipleRecords",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verify the status code 201\",function(){\r",
+							"pm.expect(pm.response.code).to.eql(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify the status message Created\", ()=>{\r",
+							"    pm.expect(pm.response.status).to.eql(\"Created\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contains firstname\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(data.firstname);\r",
+							"    console.log(data[\"firstname\"]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contains lastName\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"lastName\"));\r",
+							"    console.log(pm.iterationData.get(\"lastName\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body contains email\", function(){\r",
+							"    pm.expect(pm.response.text()).to.include(pm.iterationData.get(\"email\"));\r",
+							"    console.log(pm.iterationData.get(\"email\"));\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"firstname\":\"{{firstname}}\",\r\n\"lastName\": \"{{lastName}}\",\r\n\"email\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_URL}}",
+					"host": [
+						"{{employees_URL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CSVMultipleRecords",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"firstname\":\"{{firstname}}\",\r\n\"lastName\": \"{{lastName}}\",\r\n\"email\": \"{{email}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{employees_URL}}",
+					"host": [
+						"{{employees_URL}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "getID",
+			"value": ""
+		}
+	]
+}
